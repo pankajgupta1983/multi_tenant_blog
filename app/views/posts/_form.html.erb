@@ -1,0 +1,59 @@
+<%= turbo_frame_tag dom_id(post) do %>
+  <div data-controller="post-preview" class="form-container">
+    <%= form_with model: post, data: { turbo_frame: "_top" } do |f| %>
+      <div class="form-group">
+        <%= f.label :title, class: "form-label" %>
+        <%= f.text_field :title,
+              class: "form-input",
+              data: {
+                "post-preview-target": "titleInput",
+                action: "input->post-preview#updateTitle"
+              } %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :body, class: "form-label" %>
+        <%= f.text_area :body,
+              class: "form-input form-textarea",
+              data: {
+                "post-preview-target": "bodyInput",
+                action: "input->post-preview#updateBody"
+              } %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :published_at, class: "form-label" %>
+        <%= f.datetime_local_field :published_at,
+              class: "form-input",
+              data: {
+                "post-preview-target": "publishedAtInput",
+                action: "input->post-preview#updatePublishedAt"
+              } %>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit class: "btn btn-primary" %>
+      </div>
+    <% end %>
+
+    <div class="preview-section">
+      <h2 class="preview-title">Live Preview</h2>
+      <div class="preview-content">
+        <div class="form-group">
+          <h3 class="form-label">Title</h3>
+          <p data-post-preview-target="titlePreview"></p>
+        </div>
+        <div class="form-group">
+          <h3 class="form-label">Body</h3>
+          <p data-post-preview-target="bodyPreview"></p>
+        </div>
+        <div class="form-group">
+          <h3 class="form-label">Publish At</h3>
+          <p data-post-preview-target="publishedAtPreview"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+

@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="header">
+    <h2>Posts</h2>
+    <%= link_to "New Post", new_post_path, class: "btn btn-primary", data: { turbo_frame: "new_post" } %>
+  </div>
+
+  <div class="filter-section">
+    <%= form_with url: posts_path, method: :get, data: { controller: "filter" } do %>
+      <label class="filter-label">
+        <%= check_box_tag :published, "true", params[:published] == "true", 
+            class: "filter-checkbox",
+            data: { action: "filter#toggle" } %>
+        <span>Show only published posts</span>
+      </label>
+    <% end %>
+  </div>
+
+  <%= turbo_frame_tag "new_post" %>
+
+  <div class="posts-list">
+    <%= turbo_frame_tag "posts" do %>
+      <%= render @posts %>
+    <% end %>
+  </div>
+</div>

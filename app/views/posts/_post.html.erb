@@ -1,0 +1,20 @@
+<%= turbo_frame_tag dom_id(post) do %>
+  <div class="post-item">
+    <h3 class="post-title"><%= post.title %></h3>
+    <p class="post-body"><%= truncate(post.body, length: 200) %></p>
+    <div class="post-meta">
+      <span class="post-status <%= post.published_at ? 'status-published' : 'status-draft' %>">
+        <%= post.published_at ? "Published: #{post.published_at.strftime('%B %d, %Y')}" : "Draft" %>
+      </span>
+    </div>
+    <div class="post-actions">
+      <%= link_to 'Edit', edit_post_path(post), 
+          class: "btn btn-secondary", 
+          data: { turbo_frame: dom_id(post) } %>
+      <%= button_to 'Delete', post_path(post), 
+          method: :delete, 
+          class: "btn btn-danger",
+          form: { data: { turbo_confirm: 'Are you sure?' } } %>
+    </div>
+  </div>
+<% end %>
